@@ -18,10 +18,15 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
         return 'todo';
     };
 
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+        e.dataTransfer.setData("taskId", task.id);
+    };
+
     return (
-        <div className="group bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-all mb-3">
+        <div draggable={true} onDragStart={handleDragStart} className="group bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-all mb-3 cursor-grab active:cursor-grabbing">
             <div className="flex items-start justify-between">
                 <div className="flex items-start gap-3">
+
                     <button
                         onClick={() => updateTaskStatus(task.id, getNextStatus())}
                         className={`mt-1 transition-colors ${task.status === 'done' ? 'text-green-500' :

@@ -14,7 +14,6 @@ function App() {
           </div>
         </div>
       </header>
-      <div className=''>
       <main className="flex-1 max-w-5xl w-full mx-auto px-6 pb-12 ">
         <div className='space-y-8'>
           <section>
@@ -22,7 +21,6 @@ function App() {
           </section>
         </div>
       </main>
-      </div>
       <footer className='border-t border-slate-200 py-4 mt-auto'>
         <div className="max-w-5xl mx-auto px-6 text-center text-slate-400 text-sm">
           <p>Task Manager &copy; {new Date().getFullYear()}</p>
