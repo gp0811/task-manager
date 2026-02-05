@@ -4,6 +4,8 @@ import { Task, TaskStatus } from '../lib/types';
 interface TaskContextType {
   tasks: Task[];
   addTask: (title: string, status: TaskStatus) => void;
+  updateTaskStatus: (id: string, newStatus: TaskStatus) => void;
+  deleteTask: (id: string) => void;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -39,8 +41,18 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setTasks((prev) => [...prev, newTask]);
   };
 
+  const updateTaskStatus = (id: string, newStatus: TaskStatus) => {
+    setTasks((prev) =>
+      prev.map((task) => (task.id === id ? { ...task, status: newStatus } : task))
+    );
+  };
+
+  const deleteTask = (id: string) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, addTask}}>
+    <TaskContext.Provider value={{ tasks, addTask, updateTaskStatus, deleteTask }}>
       {children}
     </TaskContext.Provider>
   );

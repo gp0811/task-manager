@@ -11,7 +11,7 @@ interface TaskColumnProps {
 }
 
 const TaskColumn: React.FC<TaskColumnProps> = ({ title, status, icon }) => {
-    const { tasks } = useTasks();
+    const { tasks} = useTasks();
     const columnTasks = tasks.filter((t) => t.status === status);
 
     return <div className='bg-white flex-1 min-w-[300px] px-4 py-4 border rounded'>

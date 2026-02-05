@@ -1,6 +1,7 @@
 // src/components/tasks/TaskCard.tsx
 import React from 'react';
 import { Task } from '../../lib/types';
+import { useTasks } from '../../context/TaskContext';
 import deleteIcon from "../../assets/images/delete.svg";
 import doneTick from "../../assets/images/done-tick.svg";
 
@@ -9,11 +10,20 @@ interface TaskCardProps {
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+    const { updateTaskStatus, deleteTask } = useTasks();
+
+    const getNextStatus = () => {
+        if (task.status === 'todo') return 'in-progress';
+        if (task.status === 'in-progress') return 'done';
+        return 'todo';
+    };
+
     return (
         <div className="group bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-all mb-3">
             <div className="flex items-start justify-between">
                 <div className="flex items-start gap-3">
                     <button
+                        onClick={() => updateTaskStatus(task.id, getNextStatus())}
                         className={`mt-1 transition-colors ${task.status === 'done' ? 'text-green-500' :
                             task.status === 'in-progress' ? 'text-blue-500' : 'text-slate-300 hover:text-blue-500'
                             }`}
@@ -42,7 +52,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
                 {/* Delete Button */}
                 <button
                     onClick={() => {
-                        if (window.confirm('Delete this task?')) console.log('delete task');
+                        if (window.confirm('Delete this task?')) deleteTask(task.id);
                     }}
                     className="text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
                 >
