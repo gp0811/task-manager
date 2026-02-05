@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TaskStatus } from '../../lib/types';
+import TaskInput from './TaskInput';
 
 interface TaskColumnProps {
     status: TaskStatus;
@@ -16,6 +17,9 @@ const TaskColumn: React.FC<TaskColumnProps> = ({ title, status, icon }) => {
                 <h1>{title}</h1>
             </div>
         </div>
+        {status === 'todo' && (
+            <TaskInput status={status} />
+        )}
         <div className="flex flex-col gap-2">
         Tasks
       </div>
